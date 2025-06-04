@@ -1,0 +1,55 @@
+name: 🐞 Bug Report
+description: Melde ein Problem, das du entdeckt hast
+title: "[BUG] Kurzbeschreibung des Problems"
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke, dass du dir die Zeit nimmst, einen Fehler zu melden! Bitte fülle die folgenden Felder so genau wie möglich aus.
+
+  - type: input
+    id: bug-description
+    attributes:
+      label: 📝 Beschreibung des Bugs
+      description: Was ist genau passiert? Was hast du gemacht, bevor der Fehler aufgetreten ist?
+      placeholder: Zum Beispiel: Beim Speichern des Profils erscheint ein Fehler
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: 🔁 Schritte zur Reproduktion
+      description: Wie kann der Fehler nachgestellt werden? Schritt für Schritt beschreiben.
+      placeholder: |
+        1. App starten
+        2. Auf "Profil" klicken
+        3. Button "Speichern" drücken
+        4. Fehlermeldung erscheint
+    validations:
+      required: true
+
+  - type: textarea
+    id: media
+    attributes:
+      label: 📸 Screenshots oder Videos
+      description: Bitte anhängen, wenn möglich. Das hilft uns beim Verständnis des Problems.
+      placeholder: Hier Screenshot oder Link zum Video einfügen
+
+  - type: input
+    id: system-info
+    attributes:
+      label: 💻 Systeminformationen
+      description: Betriebssystem, Browser oder App-Version, Gerätetyp (falls relevant)
+      placeholder: z. B. Windows 11, Chrome 123.0, iPhone 14
+
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: 🚨 Dringlichkeit
+      description: Wie schwerwiegend ist das Problem?
+      options:
+        - 🟥 Kritisch – blockiert die Nutzung
+        - 🟧 Nervig – schränkt die Nutzung ein
+        - 🟨 Kosmetisch – beeinflusst nur das Aussehen
