@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Danke, dass du dir die Zeit nimmst, einen Fehler zu melden! Bitte fülle die folgenden Felder so genau wie möglich aus.
-
+        
   - type: input
     id: bug-description
     attributes:
@@ -50,6 +50,6 @@ body:
       label: 🚨 Dringlichkeit
       description: Wie schwerwiegend ist das Problem?
       options:
-        - 🟥 Kritisch – blockiert die Nutzung
-        - 🟧 Nervig – schränkt die Nutzung ein
-        - 🟨 Kosmetisch – beeinflusst nur das Aussehen
+        - "🟥 Kritisch – blockiert die Nutzung"
+        - "🟧 Nervig – schränkt die Nutzung ein"
+        - "🟨 Kosmetisch – beeinflusst nur das Aussehen"
