@@ -1,4 +1,4 @@
-# 🛡️ Swiss RP Einreisebot
+# Swiss RP Einreisebot
 
 > **Professioneller Discord Bot für Roleplay-Einreiseanfragen**
 
