@@ -705,16 +705,24 @@
   </style>
 </head>
 <body>
-  <div id="app"></div>
+  <div id="app">
+    <!-- Fallback content in case docsify doesn't load -->
+    <div style="padding: 2rem; text-align: center;">
+      <h1>Swiss RP Einreisebot - Dokumentation</h1>
+      <p>Laden...</p>
+    </div>
+  </div>
   <script>
     window.$docsify = {
       name: 'Swiss RP Einreisebot',
-      repo: '',
+      repo: 'https://github.com/SwissRP-Dev/Bugreport',
       loadSidebar: true,
       subMaxLevel: 3,
       auto2top: true,
-      themeColor: '#42b883',
+      themeColor: '#6366f1',
       darkMode: true,
+      maxLevel: 4,
+      loadNavbar: false,
       search: {
         maxAge: 86400000,
         paths: 'auto',
@@ -743,6 +751,12 @@
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css"></script>
+  <script>
+    // Debug logging
+    console.log('Docsify loading...');
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded');
+    });
+  </script>
 </body>
 </html> 
