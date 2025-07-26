@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Swiss RP Einreisebot - Dokumentation</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="icon" href="https://cdn.discordapp.com/emojis/🛡️.png" type="image/png">
+  <style>
+    /* Modern Design System */
+    :root {
+      --primary-color: #6366f1;
+      --primary-hover: #4f46e5;
+      --secondary-color: #10b981;
+      --accent-color: #f59e0b;
+      --danger-color: #ef4444;
+      
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --bg-elevated: #475569;
+      
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --text-inverse: #0f172a;
+      
+      --border-color: #334155;
+      --border-light: #475569;
+      
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      
+      --sidebar-width: 280px;
+      --content-max-width: 1400px;
+      --header-height: 60px;
+    }
+
+    /* Modern Typography */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, var(--bg-primary) 0%, #1e1b4b 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    /* Modern Sidebar */
+    .sidebar {
+      background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      border-right: 1px solid var(--border-color);
+      box-shadow: var(--shadow-xl);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+
+    .sidebar-nav {
+      padding: 1.5rem 0;
+    }
+
+    .sidebar-nav li {
+      margin: 0;
+      list-style: none;
+    }
+
+    .sidebar-nav li a {
+      display: block;
+      padding: 0.75rem 1.5rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      border-radius: var(--radius-md);
+      margin: 0.25rem 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-nav li a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      transition: width 0.3s ease;
+      z-index: -1;
+    }
+
+    .sidebar-nav li a:hover {
+      color: var(--text-primary);
+      background: rgba(99, 102, 241, 0.15);
+      transform: translateX(4px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sidebar-nav li a:hover::before {
+      width: 100%;
+    }
+
+    .sidebar-nav li.active > a {
+      color: var(--text-inverse);
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      box-shadow: var(--shadow-md);
+      transform: translateX(4px);
+      font-weight: 600;
+    }
+
+    /* Modern Content Area */
+    .content {
+      margin-left: var(--sidebar-width);
+      padding: 2rem 3rem;
+      max-width: var(--content-max-width);
+      min-height: 100vh;
+      width: calc(100vw - var(--sidebar-width));
+    }
+
+    .markdown-section {
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      padding: 3rem;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border-light);
+      margin-bottom: 2rem;
+      width: 100%;
+    }
+
+    /* Modern Typography */
+    .markdown-section h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .markdown-section h1::after {
+      content: '';
+      position: absolute;
+      bottom: -0.5rem;
+      left: 0;
+      width: 4rem;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border-radius: 2px;
+    }
+
+    .markdown-section h2 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 2rem 0 1rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .markdown-section h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 1.5rem 0 0.75rem 0;
+    }
+
+    .markdown-section h4, .markdown-section h5, .markdown-section h6 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 1rem 0 0.5rem 0;
+    }
+
+    .markdown-section p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .markdown-section strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .markdown-section em {
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    /* Modern Links */
+    .markdown-section a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .markdown-section a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      transition: width 0.3s ease;
+    }
+
+    .markdown-section a:hover {
+      color: var(--primary-hover);
+    }
+
+    .markdown-section a:hover::after {
+      width: 100%;
+    }
+
+    /* Modern Lists */
+    .markdown-section ul, .markdown-section ol {
+      color: var(--text-secondary);
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .markdown-section li {
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+
+    .markdown-section ul li::before {
+      content: '•';
+      color: var(--primary-color);
+      font-weight: bold;
+      position: absolute;
+      left: -1.25rem;
+    }
+
+    /* Modern Code Blocks */
+    .markdown-section pre {
+      background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-elevated));
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+
+    .markdown-section pre::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .markdown-section code {
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--primary-color);
+      padding: 0.25rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 500;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .markdown-section pre code {
+      background: transparent;
+      color: var(--text-secondary);
+      border: none;
+      padding: 0;
+    }
+
+    /* Modern Tables */
+    .markdown-section table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      table-layout: fixed;
+    }
+
+    .markdown-section th {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: var(--text-inverse);
+      font-weight: 600;
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .markdown-section td {
+      padding: 1.25rem 1.5rem;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-color);
+      transition: background-color 0.2s ease;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      vertical-align: top;
+    }
+    
+    /* Column width optimization for command tables */
+    .markdown-section table th:nth-child(1),
+    .markdown-section table td:nth-child(1) {
+      width: 15%;
+      min-width: 120px;
+    }
+    
+    .markdown-section table th:nth-child(2),
+    .markdown-section table td:nth-child(2) {
+      width: 25%;
+      min-width: 200px;
+    }
+    
+    .markdown-section table th:nth-child(3),
+    .markdown-section table td:nth-child(3) {
+      width: 35%;
+      min-width: 250px;
+    }
+    
+    .markdown-section table th:nth-child(4),
+    .markdown-section table td:nth-child(4) {
+      width: 25%;
+      min-width: 200px;
+    }
+
+    .markdown-section tr:nth-child(even) {
+      background: rgba(51, 65, 85, 0.3) !important;
+    }
+
+    .markdown-section tr:hover td {
+      background: rgba(99, 102, 241, 0.1) !important;
+      color: var(--text-primary) !important;
+    }
+    
+    /* Force consistent column widths for all tables */
+    .markdown-section table th:nth-child(1),
+    .markdown-section table td:nth-child(1) {
+      width: 12% !important;
+      min-width: 100px !important;
+    }
+    
+    .markdown-section table th:nth-child(2),
+    .markdown-section table td:nth-child(2) {
+      width: 23% !important;
+      min-width: 180px !important;
+    }
+    
+    .markdown-section table th:nth-child(3),
+    .markdown-section table td:nth-child(3) {
+      width: 30% !important;
+      min-width: 220px !important;
+    }
+    
+    .markdown-section table th:nth-child(4),
+    .markdown-section table td:nth-child(4) {
+      width: 35% !important;
+      min-width: 250px !important;
+    }
+    
+    /* Code styling within table cells */
+    .markdown-section table code {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--primary-color);
+      padding: 0.25rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      display: inline-block;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
+      max-width: 100%;
+      line-height: 1.4;
+    }
+    
+    /* Ensure consistent table styling */
+    .markdown-section table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+      margin: 2rem 0 !important;
+      background: var(--bg-secondary) !important;
+      border-radius: var(--radius-lg) !important;
+      overflow: hidden !important;
+      box-shadow: var(--shadow-lg) !important;
+      border: 1px solid var(--border-color) !important;
+      table-layout: fixed !important;
+    }
+    
+    .markdown-section table th {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+      color: var(--text-inverse) !important;
+      font-weight: 600 !important;
+      padding: 1.25rem 1.5rem !important;
+      text-align: left !important;
+      font-size: 0.9rem !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+    
+    .markdown-section table td {
+      padding: 1.25rem 1.5rem !important;
+      color: var(--text-secondary) !important;
+      border-bottom: 1px solid var(--border-color) !important;
+      transition: background-color 0.2s ease !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+      hyphens: auto !important;
+      vertical-align: top !important;
+      min-height: 60px !important;
+      line-height: 1.5 !important;
+    }
+    
+    /* Responsive table adjustments */
+    @media (max-width: 1024px) {
+      .markdown-section table {
+        font-size: 0.9rem;
+      }
+      
+      .markdown-section table th,
+      .markdown-section table td {
+        padding: 1rem 1rem;
+      }
+      
+      .markdown-section table code {
+        font-size: 0.8rem;
+        padding: 0.2rem 0.4rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .markdown-section table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+      
+      .markdown-section table th,
+      .markdown-section table td {
+        min-width: 120px;
+        padding: 0.75rem 0.5rem;
+      }
+      
+      .markdown-section table code {
+        font-size: 0.75rem;
+        padding: 0.15rem 0.3rem;
+      }
+    }
+
+    /* Modern Blockquotes */
+    .markdown-section blockquote {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(16, 185, 129, 0.1));
+      border-left: 4px solid var(--primary-color);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    .markdown-section blockquote::before {
+      content: '"';
+      position: absolute;
+      top: -0.5rem;
+      left: 1rem;
+      font-size: 3rem;
+      color: var(--primary-color);
+      font-family: serif;
+    }
+
+    .markdown-section blockquote p {
+      color: var(--text-secondary);
+      margin: 0;
+      font-style: italic;
+    }
+
+    /* Modern Search */
+    .search {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      margin: 1rem;
+    }
+
+    .search input {
+      background: transparent;
+      color: var(--text-primary);
+      border: none;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      width: 100%;
+      outline: none;
+    }
+
+    .search input::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* Modern Navigation */
+    .app-nav {
+      background: rgba(30, 41, 59, 0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 2rem;
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: var(--sidebar-width);
+      z-index: 999;
+    }
+
+    .app-name {
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 1.25rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* Ensure all sidebar text elements are light colored */
+    .sidebar-nav > li > p {
+      color: var(--text-primary) !important;
+      font-weight: 600 !important;
+    }
+    
+    .sidebar-nav > li > a {
+      color: var(--text-primary) !important;
+    }
+    
+    .sidebar-nav > li > a:hover {
+      color: var(--text-primary) !important;
+      background: rgba(99, 102, 241, 0.15) !important;
+    }
+    
+    .sidebar-nav > li.active > a {
+      color: var(--text-inverse) !important;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)) !important;
+    }
+    
+    /* Sidebar title and main navigation */
+    .sidebar-nav > li:first-child > a {
+      color: var(--text-primary) !important;
+      font-weight: 700 !important;
+      font-size: 1.2em !important;
+    }
+    
+    /* All navigation links */
+    .sidebar-nav li a {
+      color: var(--text-primary) !important;
+    }
+    
+    .sidebar-nav li a:hover {
+      color: var(--text-primary) !important;
+      background: rgba(99, 102, 241, 0.15) !important;
+    }
+    
+    /* Sub-navigation items */
+    .sidebar-nav ul li a {
+      color: var(--text-primary) !important;
+      font-size: 0.9rem !important;
+      padding: 0.5rem 1rem 0.5rem 2rem !important;
+    }
+    
+    .sidebar-nav ul li a:hover {
+      color: var(--text-primary) !important;
+      background: rgba(99, 102, 241, 0.1) !important;
+    }
+
+    /* Modern Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+      border-radius: var(--radius-sm);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, var(--primary-hover), var(--secondary-color));
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .content {
+        padding: 2rem;
+      }
+      
+      .markdown-section {
+        padding: 2rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      
+      .content {
+        margin-left: 0;
+        padding: 1rem;
+        width: 100vw;
+      }
+      
+      .app-nav {
+        left: 0;
+      }
+      
+      .markdown-section {
+        padding: 1.5rem;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .markdown-section {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    /* Custom Components */
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: var(--text-inverse);
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin: 1rem 0;
+      box-shadow: var(--shadow-md);
+      transition: all 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'Swiss RP Einreisebot',
+      repo: '',
+      loadSidebar: true,
+      subMaxLevel: 3,
+      auto2top: true,
+      themeColor: '#42b883',
+      darkMode: true,
+      search: {
+        maxAge: 86400000,
+        paths: 'auto',
+        placeholder: 'Suchen...',
+        noData: 'Keine Ergebnisse gefunden!',
+        depth: 6
+      },
+      copyCode: {
+        buttonText: 'Kopieren',
+        errorText: 'Fehler',
+        successText: 'Kopiert!'
+      },
+      pagination: {
+        previousText: 'Zurück',
+        nextText: 'Weiter',
+        crossChapter: true,
+        crossChapterText: true,
+      },
+      themeable: {
+        readyTransition: true,
+        responsiveTables: true
+      }
+    }
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css"></script>
+</body>
+</html> 
